@@ -1,0 +1,182 @@
+import java.util.*;
+class Node {
+    int data;
+    Node next;
+    Node prev;
+    static Node head = null;
+    public Node(int data){
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+    public static void insertion(int data){
+        Node newnode = new Node(data);
+        if(head==null){
+            head=newnode;
+        }
+        else{
+            Node temp = head;
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            newnode.prev=temp;
+            temp.next=newnode;
+        }
+    }
+    public static void insertAtFront(int data){
+        Node newnode = new Node(data);
+        if(head==null){
+            head = newnode;
+        }
+        else{
+            head.prev=newnode;
+            newnode.next=head;
+            newnode.prev=null;
+            head=newnode;
+        }
+    }
+    public static void insertAtLast(int data){
+        Node newnode = new Node(data);
+        if(head==null){
+            head = newnode;
+        }
+        else{
+            Node temp = head;
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            newnode.prev=temp;
+            temp.next=newnode;
+            newnode.next=null;
+        }
+    }
+    public static void insertAtPosition(int pos,int data){
+        Node newnode = new Node(data);
+        Node temp = head;
+        int c=0;
+        for(int i=0;i<pos-1 && temp!=null;i++){
+            temp=temp.next;
+            c++;
+        }
+        if(c<pos-1 || temp==null){
+            System.out.println("Enter correct position");
+        }
+        else{
+            Node next = temp.next;
+            newnode.prev=temp;
+            newnode.next=next;
+            temp.next=newnode;
+            if(next!=null){
+                next.prev=newnode;
+            }
+        }
+    }
+    public static void deleteAtFront(){
+        if(head==null){
+            System.out.println("List Is Empty");
+        }
+        else{
+            head = head.next;
+            head.prev=null;
+        }
+    }
+    public static void deleteAtLast(){
+        if(head==null){
+            System.out.println("List Is Empty");
+        }
+        else {
+            Node temp = head;
+            while(temp.next!=null){
+                temp = temp.next;
+            }
+            temp.prev.next=null;
+            temp.prev=null;
+        }
+    }
+    public static void deleteAtPosition(int posi){
+        if(head==null){
+            System.out.println("There is no List");
+        }
+        Node temp =head;
+        int c=0;
+        for(int i=0;i<posi && temp.next!=null;i++){
+            temp=temp.next;
+            c++;
+        }
+        if(c<posi || temp==null){
+            System.out.println("List is Small Please Enter correct position "); 
+        }
+        else{
+            if(temp.next==null){
+                temp.prev.next=null;
+            }
+            else {
+            temp.prev.next=temp.next;
+            temp.next.prev=temp.prev;
+            }
+        }
+    }
+    public static void display(){
+        Node temp = head;
+        System.out.println("Elements in a LinkedList ");
+        while(temp!=null){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+        System.out.println();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter no of nodes ");
+        int n = sc.nextInt();
+        //CREATION 
+        System.out.println("Enter Elements ");
+        for(int i=0;i<n;i++){
+            int a = sc.nextInt();
+            Node.insertion(a);
+        }
+        Node.display();
+        
+        //INSERTION AT FRONT
+        System.out.println("Enter element to insert front");
+        int f = sc.nextInt();
+        Node.insertAtFront(f);
+        Node.display();
+        
+        //INSERTION AT LAST
+        System.out.println("Enter element to insert Last");
+        int l = sc.nextInt();
+        Node.insertAtLast(l);
+        Node.display();
+        
+        //INSERTION AT SPECIFIC POSITION
+        System.out.println("Enter position to insert");
+        int pos = sc.nextInt();
+        System.out.println("Enter element to insert at position");
+        int s = sc.nextInt();
+        Node.insertAtPosition(pos,s);
+        Node.display();
+        
+        //DELETION AT FRONT AND LAST
+        Node.deleteAtFront();
+        System.out.println("After dewletion at front ");
+        Node.display();
+        Node.deleteAtLast();
+        System.out.println("After dewletion at last ");
+        Node.display();
+        
+        //INSERTION AT LAST
+        System.out.println("Enter element to insert Last");
+        int scc = sc.nextInt();
+        Node.insertAtLast(scc);
+        Node.display();
+    
+        //DELETION AT SPECIFIC POSITION
+        System.out.println("Enter position to delete ");
+        int po = sc.nextInt();
+        Node.deleteAtPosition(po);
+        Node.display();
+    }
+}
