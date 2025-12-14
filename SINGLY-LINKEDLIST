@@ -47,6 +47,67 @@ class linkedList {
         total++;
     }
     
+    public void deleteAtLast(){
+        if(head==null){
+            System.out.println("No Elements : ");
+            return;
+        }
+        if(head==tail){
+            head=tail=null;
+        }
+        else{
+            Node temp=head;
+            for(int i=1;i<total-1;i++){
+                temp = temp.next;
+            }
+            temp.next=null;
+            tail=temp;
+        }
+        total--;
+    }
+    
+    public void deleteAtFirst(){
+        if(head==null){
+            System.out.println("No Elements : ");
+            return;
+        }
+        if(head==tail){
+            head=tail=null;
+        }
+        else{
+            head=head.next;
+        }
+        total--;
+    }
+    
+    public void deleteAtPosition(int pos){
+        if(head==null){
+            System.out.println("No List is there ");
+            return;
+        }
+        if(head==tail){
+            head=tail=null;
+            total--;
+            return;
+        }
+        if(pos<=1){
+            deleteAtFirst();
+            return;
+        }
+        if(pos>=total){
+            deleteAtLast();
+            return;
+        }
+        Node temp = head;
+        for(int i=1;i<pos-1;i++){
+            temp=temp.next;
+        }
+        Node del = temp.next;
+        temp.next = del.next;
+        del.next = null;
+        total--;
+    }
+    
     public void display(){ 
         Node temp = head; 
         while(temp != null){ 
@@ -57,7 +118,7 @@ class linkedList {
     }
     
     public void count(){
-        System.out.print("Total Nodes in the List : "+total);
+        System.out.println("Total Nodes in the List : "+total);
     }
 } 
 public class Main { 
@@ -70,8 +131,17 @@ public class Main {
         for(int i = 0; i < n; i++){ 
             list.insert(sc.nextInt()); 
         } 
+        list.deleteAtFirst();
+        list.count();
         System.out.print("Elements in List : "); 
         list.display(); 
+        list.deleteAtLast();
+        list.display();
+        list.deleteAtPosition(sc.nextInt());
+        list.display();
+        System.out.println(list.head.data);
+        System.out.println(list.tail.data);
+        
         System.out.print("Enter node to insert at First : ");
         int b = sc.nextInt();
         list.insertFirst(b);
@@ -81,5 +151,7 @@ public class Main {
         System.out.print("Nodes in the List : ");
         list.display();
         list.count();
+        
+        
     } 
 }
